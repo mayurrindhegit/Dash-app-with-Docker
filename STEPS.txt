@@ -1,0 +1,50 @@
+Write code and create "main.py" file
+besides code file , we must need to put Docker file (Dockerfile should not have any extension and its name should be "Dockerfile")
+In Dockerfile we write 
+
+#DOCKER FILE STARTS HERE
+
+FROM ubuntu # Here we are taking pre-build ubuntu image
+
+RUN apt-get update
+RUN apt-get -y install python3   # Installing python
+RUN apt-get -y install python3-pip  # installing pip in order to install other required packages
+RUN pip3 install pandas
+RUN pip3 install -q plotly
+RUN pip3 install dash
+RUN pip3 install dash_core_components
+RUN pip3 install dash_html_components
+
+RUN cd opt
+
+COPY main.py .  # copy our code file to docker image 
+
+ENTRYPOINT python3 main.py
+
+#DOCKER FILE ENDS HERE
+
+After creating Dockerfile . We need to create an image of our app .
+
+open cmd where "main.py" is present (or you can open cmd and using cd command change the directory where "main.py"  code is present)
+
+type below code (code snippets are shown ">>")
+
+>>docker # it will open help and gives the availble commnds to use while using docker
+
+>>docker images # it gives the list of available images
+
+>>docker ps  # to check if any container is running (it shows the list of running containers)
+
+>>docker build -t image-name .   # here we build image image-name can be anything , this will be image name of our custom image after building it("." means current directory)
+
+>>docker run image-name # to run the image in the container , while running we can give image ID instead of image-name
+
+>>docker run -p 8050:8050 image-name # port mapping
+
+>>docker stop image-name  # used to stop ruuning image
+
+Pushing image to docker_hub 
+
+>>docker tag image-name user-name/image-name
+
+>>docker push user-name/image-name
